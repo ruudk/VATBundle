@@ -6,9 +6,15 @@
 
 	<parameters>
 		<parameter key="vat.service.class">Sparkling\VATBundle\Service\VATService</parameter>
+		<parameter key="vat.validator.class">Sparkling\VATBundle\Validator\VATValidator</parameter>
 	</parameters>
 
 	<services>
 		<service id="vat.service" class="%vat.service.class%" />
+
+		<service id="vat.validator" class="%vat.validator.class%">
+		    <argument type="service" id="vat.service" />
+		    <tag name="validator.constraint_validator" alias="vat.validator" />
+		</service>
 	</services>
 </container>

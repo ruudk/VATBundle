@@ -8,8 +8,14 @@ use Sparkling\VATBundle\Exception\InvalidVATNumberException;
 
 class VATService
 {
-	public function validate($countryCode, $vatNumber)
+	public function validate($countryCode, $vatNumber = null)
 	{
+		if(!isset($vatNumber))
+		{
+			$vatNumber = substr($countryCode, 2);
+			$countryCode = substr($countryCode, 0, 2);
+		}
+
 		$countryCode = preg_replace('/[^a-zA-Z]/', '', $countryCode);
 		$vatNumber = preg_replace('/[^a-zA-Z0-9]/', '', $vatNumber);
 
