@@ -5,11 +5,8 @@ namespace Sparkling\VATBundle\DependencyInjection;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Config\Definition\Processor;
 
 /**
  * VAT Extension
@@ -24,13 +21,13 @@ class SparklingVATExtension extends Extension
         $loader->load('config.xml');
     }
 
-	public function getXsdValidationBasePath()
-	{
-		return __DIR__.'/../Resources/config/';
-	}
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/';
+    }
 
-	public function getNamespace()
-	{
-		return 'http://schema.sparklingapp.com/vat';
-	}
+    public function getNamespace()
+    {
+        return 'http://schema.sparklingapp.com/vat';
+    }
 }

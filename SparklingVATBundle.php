@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class SparklingVATBundle extends Bundle
 {
-	public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container)
     {
         parent::build($container);
     }
