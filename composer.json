@@ -1,5 +1,5 @@
 {
-    "name":        "sparklingapp/vat-bundle",
+    "name":        "sparkling/vat-bundle",
     "type":        "symfony-bundle",
     "description": "A Symfony2 Bundle that checks a european VAT number",
     "keywords":    ["vat", "validation", "symfony2"],
