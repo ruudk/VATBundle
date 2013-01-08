@@ -24,7 +24,7 @@ class VATService
         if(!preg_match('/^[0-9A-Za-z\+\*\.]{2,12}$/', $vatNumber))
             throw new InvalidVATNumberException('The VAT number is not valid. It must be in format [0-9A-Za-z\+\*\.]{2,12}');
 
-        return $this->checkWithAppspot($countryCode, $vatNumber);
+        return $this->checkWithVIES($countryCode, $vatNumber);
     }
 
     protected function checkWithVIES($countryCode, $vatNumber)
