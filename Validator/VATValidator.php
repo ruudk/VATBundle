@@ -21,11 +21,11 @@ class VATValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         try {
-            if($value == '' || $this->vat->validate($value))
-
-            return true;
+            if($value == '' || $this->vat->validate($value)) {
+                return true;
+            }
         } catch (VATException $exception) {
-
+            return true;
         }
 
         $this->context->addViolation($constraint->message);
