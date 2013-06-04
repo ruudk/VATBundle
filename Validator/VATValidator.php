@@ -18,7 +18,7 @@ class VATValidator extends ConstraintValidator
         $this->vat = $vat;
     }
 
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         try {
             if($value == '' || $this->vat->validate($value))
