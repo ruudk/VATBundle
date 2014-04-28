@@ -8,6 +8,8 @@ use Sparkling\VATBundle\Exception\InvalidVATNumberException;
 
 class VATService
 {
+    static $validCountries = array('AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB', 'GR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK');
+
     public function validate($countryCode, $vatNumber = null)
     {
         if (!isset($vatNumber)) {
@@ -20,6 +22,9 @@ class VATService
 
         if(!preg_match('/^[A-Z]{2}$/', $countryCode))
             throw new InvalidCountryCodeException('The countrycode is not valid. It must be in format [A-Z]{2}');
+
+        if(!in_array($countryCode, self::$validCountries))
+            throw new InvalidCountryCodeException('The countrycode is not valid. It must be one of '.implode(', ', self::$validCountries));
 
         if(!preg_match('/^[0-9A-Za-z\+\*\.]{2,12}$/', $vatNumber))
             throw new InvalidVATNumberException('The VAT number is not valid. It must be in format [0-9A-Za-z\+\*\.]{2,12}');
