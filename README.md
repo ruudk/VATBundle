@@ -8,7 +8,7 @@ Installation
 
 Using composer.json, add this to your require list:
 
-    "sparkling/vat-bundle": "0.1.2"
+    "sparkling/vat-bundle": "~0.1"
 
 In your AppKernel.php, add this to your $bundles array:
 
