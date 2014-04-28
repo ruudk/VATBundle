@@ -4,6 +4,8 @@ namespace Sparkling\VATBundle\Validator;
 
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraint;
+use Sparkling\VATBundle\Exception\InvalidCountryCodeException;
+use Sparkling\VATBundle\Exception\InvalidVATNumberException;
 use Sparkling\VATBundle\Exception\VATException;
 
 class VATValidator extends ConstraintValidator
@@ -24,6 +26,10 @@ class VATValidator extends ConstraintValidator
             if($value == '' || $this->vat->validate($value)) {
                 return true;
             }
+        } catch (InvalidCountryCodeException $exception) {
+            // Catch invalid country code format exception
+        } catch (InvalidVATNumberException $exception) {
+            // Catch invalid number format exception
         } catch (VATException $exception) {
             return true;
         }
