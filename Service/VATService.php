@@ -112,8 +112,7 @@ class VATService
      */
     protected function checkWithAppspot($countryCode, $vatNumber)
     {
-        $url = 'http://isvat.appspot.com/' . addslashes($countryCode) . '/' . addslashes($vatNumber) . '/';
-        
+        $url = sprintf('http://isvat.appspot.com/%s/%s/', addslashes($countryCode), addslashes($vatNumber));
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         curl_setopt($ch, CURLOPT_URL, $url);
