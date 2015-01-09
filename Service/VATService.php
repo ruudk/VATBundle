@@ -52,7 +52,7 @@ class VATService
 
             return $result->valid ?  true : false;
         } catch (\SoapFault $exception) {
-            throw new VATException($exception);
+            throw new VATException('SOAP fault', 0, $exception);
         }
     }
 
