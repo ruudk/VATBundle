@@ -8,7 +8,11 @@ use Sparkling\VATBundle\Exception\InvalidVATNumberException;
 
 class VATService
 {
-    static $validCountries = array('AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB', 'EL', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK');
+    static public $validCountries = array(
+        'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB',
+        'GR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO',
+        'SE', 'SI', 'SK'
+    );
 
     public function validate($countryCode, $vatNumber = null)
     {
@@ -20,14 +24,24 @@ class VATService
         $countryCode = preg_replace('/[^a-zA-Z]/', '', $countryCode);
         $vatNumber = preg_replace('/[^a-zA-Z0-9]/', '', $vatNumber);
 
-        if(!preg_match('/^[A-Z]{2}$/', $countryCode))
-            throw new InvalidCountryCodeException('The countrycode is not valid. It must be in format [A-Z]{2}');
+        if (!preg_match('/^[A-Z]{2}$/', $countryCode)) {
+            throw new InvalidCountryCodeException(
+                'The countrycode is not valid. It must be in format [A-Z]{2}'
+            );
+        }
 
-        if(!in_array($countryCode, self::$validCountries))
-            throw new InvalidCountryCodeException('The countrycode is not valid. It must be one of '.implode(', ', self::$validCountries));
+        if (!in_array($countryCode, self::$validCountries)) {
+            throw new InvalidCountryCodeException(
+                'The countrycode is not valid. It must be one of '
+                . implode(', ', self::$validCountries)
+            );
+        }
 
-        if(!preg_match('/^[0-9A-Za-z\+\*\.]{2,12}$/', $vatNumber))
-            throw new InvalidVATNumberException('The VAT number is not valid. It must be in format [0-9A-Za-z\+\*\.]{2,12}');
+        if (!preg_match('/^[0-9A-Za-z\+\*\.]{2,12}$/', $vatNumber)) {
+            throw new InvalidVATNumberException(
+                'The VAT number is not valid. It must be in format [0-9A-Za-z\+\*\.]{2,12}'
+            );
+        }
 
         return $this->checkWithVIES($countryCode, $vatNumber);
     }
@@ -58,9 +72,13 @@ class VATService
 
     protected function checkWithAppspot($countryCode, $vatNumber)
     {
+        $url = 'http://isvat.appspot.com/'
+             . addslashes($countryCode) . '/'
+             . addslashes($vatNumber) . '/';
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-        curl_setopt($ch, CURLOPT_URL, 'http://isvat.appspot.com/' . addslashes($countryCode) . '/' . addslashes($vatNumber) . '/'); // set url to post to
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_FAILONERROR, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
