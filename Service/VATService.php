@@ -10,8 +10,8 @@ class VATService
 {
     static public $validCountries = array(
         'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB',
-        'EL', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO',
-        'SE', 'SI', 'SK'
+        'EL', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT',
+        'RO', 'SE', 'SI', 'SK'
     );
 
     public function validate($countryCode, $vatNumber = null)
