@@ -27,6 +27,9 @@ class VATValidator extends ConstraintValidator
                 return true;
             }
         } catch (InvalidCountryCodeException $exception) {
+            if ($constraint->ignoreInvalidCountry) {
+                return true;
+            }
             // Catch invalid country code format exception
         } catch (InvalidVATNumberException $exception) {
             // Catch invalid number format exception
