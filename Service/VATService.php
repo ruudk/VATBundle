@@ -21,9 +21,6 @@ class VATService
             $countryCode = substr($countryCode, 0, 2);
         }
 
-        $countryCode = preg_replace('/[^a-zA-Z]/', '', $countryCode);
-        $vatNumber = preg_replace('/[^a-zA-Z0-9]/', '', $vatNumber);
-
         if (!preg_match('/^[A-Z]{2}$/', $countryCode)) {
             throw new InvalidCountryCodeException(
                 'The countrycode is not valid. It must be in format [A-Z]{2}'
