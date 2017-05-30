@@ -8,11 +8,11 @@ use Sparkling\VATBundle\Exception\InvalidVATNumberException;
 
 class VATService
 {
-    static public $validCountries = array(
-        'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB',
-        'EL', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT',
-        'RO', 'SE', 'SI', 'SK'
-    );
+    public static $validCountries = [
+        'AT', 'BE', 'BG', 'BL', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR',
+        'GB', 'GP', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MF', 'MQ', 'MT', 'NC',
+        'NL', 'PL', 'PM', 'PT', 'RE', 'RO', 'SE', 'SI', 'SK', 'WF', 'YT',
+    ];
 
     public function validate($countryCode, $vatNumber = null)
     {
@@ -30,7 +30,7 @@ class VATService
         if (!in_array($countryCode, self::$validCountries)) {
             throw new InvalidCountryCodeException(
                 'The countrycode is not valid. It must be one of '
-                . implode(', ', self::$validCountries)
+                .implode(', ', self::$validCountries)
             );
         }
 
@@ -46,19 +46,19 @@ class VATService
     protected function checkWithVIES($countryCode, $vatNumber)
     {
         try {
-            ini_set("soap.wsdl_cache_enabled", 0);
+            ini_set('soap.wsdl_cache_enabled', 0);
 
             $client = new \SoapClient(__DIR__.'/../Resources/wsdl/checkVatService.wsdl', array(
-                'soap_version'  => SOAP_1_1,
-                'style'         => SOAP_DOCUMENT,
-                'encoding'      => SOAP_LITERAL,
-                'location'      => 'http://ec.europa.eu/taxation_customs/vies/services/checkVatService',
-                'trace'         => 1
+                'soap_version' => SOAP_1_1,
+                'style' => SOAP_DOCUMENT,
+                'encoding' => SOAP_LITERAL,
+                'location' => 'http://ec.europa.eu/taxation_customs/vies/services/checkVatService',
+                'trace' => 1,
             ));
 
             $result = $client->checkVat(array(
-                'countryCode'   => $countryCode,
-                'vatNumber'     => $vatNumber
+                'countryCode' => $countryCode,
+                'vatNumber' => $vatNumber,
             ));
 
             return $result->valid ?  true : false;
@@ -70,8 +70,8 @@ class VATService
     protected function checkWithAppspot($countryCode, $vatNumber)
     {
         $url = 'http://isvat.appspot.com/'
-             . addslashes($countryCode) . '/'
-             . addslashes($vatNumber) . '/';
+             .addslashes($countryCode).'/'
+             .addslashes($vatNumber).'/';
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
